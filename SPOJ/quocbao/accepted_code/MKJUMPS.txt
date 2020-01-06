@@ -1,0 +1,68 @@
+
+import java.util.*;
+public class Main{
+    static final int MAX = 12;
+    static final int[] dr = {-2, -2, -1, 1, 2, 2, 1, -1};
+    static final int[] dc = {-1, 1, 2, 2, 1, -1, -2, -2};
+
+    static int[][] visited = new int [MAX][MAX];
+    static int[][] table = new int[MAX][MAX];
+    static int n;
+
+    public static boolean isValid(int r, int c){
+        return 0 <= r && r < n && 0 <= c && c < 10;
+    }
+
+    public static int DFS(int ur, int uc, int res) {
+        res--;
+        table[ur][uc] = 0;
+        int ans = res;
+        for (int k = 0; k < 8; k++){
+            int r = ur + dr[k];
+            int c = uc + dc[k];
+            if (isValid(r, c) && table[r][c] == 1){
+                table[r][c] = 0;
+                ans = Math.min(DFS(r, c, res), ans);
+            }
+        }
+        table[ur][uc] = 1;
+        return ans;
+    }
+    public static void main(String[] agrs){
+        Scanner in = new Scanner(System.in);
+        int testcase = 0;
+        while(true) {
+            testcase++;
+            n = in.nextInt();
+            if (n == 0){
+                break;
+            }
+            for (int i = 0; i < 10; i++){
+                for (int j = 0; j < 10; j++){
+                    table[i][j] = 0;
+                }
+            }
+            int res = 0;
+            for (int i = 0; i < n; i ++){
+                int j = in.nextInt();
+                int k = in.nextInt();
+                for (int h = j; h < j + k; h++){
+                    table[i][h] = 1;
+                }
+                res += k;
+            }
+            for (int i = 0; i < 10; i++){
+                if (table[0][i] == 1){
+                    res = DFS(0, i, res);
+                    break;
+                }
+            }
+            if (res == 1) {
+                System.out.printf("Case %d, %d square can not be reached.\n",testcase, res);
+            }
+            else {
+                System.out.printf("Case %d, %d squares can not be reached.\n",testcase, res);
+            }
+        }
+    }
+}

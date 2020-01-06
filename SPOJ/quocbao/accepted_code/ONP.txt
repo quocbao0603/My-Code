@@ -1,0 +1,30 @@
+import java.util.Scanner;
+import java.util.Stack;
+
+public class Main {
+    private static void transform(String expression) {
+        Stack<Character> s = new Stack<>();
+        int n = expression.length();
+        for (int i = 0; i < n; i++){
+            char symbol = expression.charAt(i);
+            if (Character.isLetter(symbol)) {
+                System.out.print(symbol);
+            }
+            else if (symbol == ')'){
+                System.out.print(s.pop());
+            }
+            else if (symbol != '('){
+                s.push(symbol);
+            }
+        }
+        System.out.println();
+    }
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int t = sc.nextInt();
+        for (int i = 0; i < t; i++) {
+            String expression = sc.next();
+            transform(expression);
+        }
+    }
+}

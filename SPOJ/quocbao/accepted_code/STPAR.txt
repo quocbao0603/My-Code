@@ -1,0 +1,50 @@
+import java.util.Scanner;
+import java.util.Stack;
+
+public class Main {
+    static final int MAX = 1005;
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int[] trucks = new int[MAX];
+        Stack<Integer> parking = new Stack<>();
+
+        while (true) {
+            int n = sc.nextInt();
+            if (n == 0) {
+                break;
+            }
+
+            for (int i = 0; i < n; i++) {
+                trucks[i] = sc.nextInt();
+            }
+
+            int index = 1;
+            int i = 0;
+
+            while (i < n) {
+                //System.out.println("yes");
+                if (trucks[i] != index) {
+                    parking.push(trucks[i]);
+                }
+                else {
+                    index++;
+                }
+                i++;
+                while (true) {
+                    if (!parking.empty() && parking.peek() == index) {
+                        parking.pop();
+                        index++;
+                        continue;
+                    }
+                    else break;
+                }
+
+            }
+            if (parking.empty()) {
+                System.out.println("yes");
+            }
+            else System.out.println("no");
+            parking.clear();
+        }
+    }
+}
